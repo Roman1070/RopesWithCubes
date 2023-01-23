@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
                     _rope.ResetToSpawnCurve();
                     _currentMainCube = cube;
                     _ropeTailConnection.transformSettings.transform = cube.RopeAttachmentPoint;
+                    _ropeHeadConnection.transformSettings.transform = _ropeHead;
                     _isHolding = true;
                     _currentMainCube.Collider.enabled = false;
                     _rope.gameObject.SetActive(true);
