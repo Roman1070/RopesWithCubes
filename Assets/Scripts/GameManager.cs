@@ -46,14 +46,17 @@ public class GameManager : MonoBehaviour
                 if (hit.collider.TryGetComponent<InteractableCube>(out var cube))
                 {
                     _currentMainCube = cube;
+                    _currentMainCube.Collider.enabled = false;
                     _ropeTailConnection.transformSettings.transform = cube.RopeAttachmentPoint;
                     _ropeHeadConnection.transformSettings.transform = _ropeHead;
                     _isHolding = true;
-                    _currentMainCube.Collider.enabled = false;
                     _rope.gameObject.SetActive(true);
+                    float radius = _rope.radius;
+                    _rope.radius = 0;
                     DOVirtual.DelayedCall(0.1f, () =>
                     {
                         _rope.ResetToSpawnCurve();
+                        _rope.radius = radius;
                     });
                 }
             }
@@ -65,14 +68,22 @@ public class GameManager : MonoBehaviour
                 var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out var hit))
                 {
-                    if (hit.collider.TryGetComponent<InteractableCube>(out var cube) && cube.gameObject!=_currentMainCube.gameObject)
+                    if (hit.collider.TryGetComponent<InteractableCube>(out var cube) && cube.gameObject != _currentMainCube.gameObject)
                     {
                         _ropeHeadConnection.transformSettings.transform = cube.transform;
                         StartCoroutine(MoveCubeAlongTheRope(cube.transform));
                     }
-                    else _rope.gameObject.SetActive(false);
+                    else
+                    {
+                        _rope.gameObject.SetActive(false);
+                        _currentMainCube.Collider.enabled = true;
+                    }
                 }
-                else _rope.gameObject.SetActive(false);
+                else
+                {
+                    _rope.gameObject.SetActive(false);
+                    _currentMainCube.Collider.enabled = true;
+                }
 
 
                 _isHolding = false;
