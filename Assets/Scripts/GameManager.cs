@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Rope _rope;
     [SerializeField] private Transform _ropeHead;
     [SerializeField] private Collider _planeCollider;
+    [SerializeField] private InteractableCube _cubePrefab;
     [SerializeField, ReadOnly] private float _length;
     private InteractableCube _currentMainCube;
     private bool _isHolding;
@@ -79,17 +80,17 @@ public class GameManager : MonoBehaviour
                     {
                         _rope.gameObject.SetActive(false);
                         _currentMainCube.Collider.enabled = true;
+                        _currentMainCube = null;
                     }
                 }
                 else
                 {
                     _rope.gameObject.SetActive(false);
                     _currentMainCube.Collider.enabled = true;
+                    _currentMainCube = null;
                 }
 
-
                 _isHolding = false;
-                _currentMainCube = null;
             }
         }
 
@@ -108,7 +109,6 @@ public class GameManager : MonoBehaviour
         var mainAnchor = _currentMainCube.RopeAttachmentPoint;
 
         _rope.collisions.enabled = false;
-        //_planeCollider.enabled = false;
 
         DOVirtual.DelayedCall(0.5f* length/10f, () =>
         {
@@ -119,8 +119,13 @@ public class GameManager : MonoBehaviour
             cube.DOMove(positions[i], delay);
             yield return new WaitForSeconds(delay);
         }
+        var newCube = Instantiate(_cubePrefab, positions[positions.Count-1], Quaternion.identity);
+        newCube.transform.localScale = Vector3.one * 0.6f;
+        Destroy(_currentMainCube.gameObject);
+        Destroy(cube.gameObject);
+
+        _currentMainCube = null;
         _rope.gameObject.SetActive(false);
         _rope.collisions.enabled = true;
-        //_planeCollider.enabled = true;
     }
 }

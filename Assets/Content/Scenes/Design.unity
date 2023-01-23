@@ -285,6 +285,7 @@ MonoBehaviour:
   _rope: {fileID: 162236694}
   _ropeHead: {fileID: 1951591011}
   _planeCollider: {fileID: 608012859}
+  _cubePrefab: {fileID: 3374602473574814177, guid: 60b7e8d31d59d9e46a0632b06ccf5911, type: 3}
   _length: 0
 --- !u!1 &47331804
 GameObject:
@@ -549,11 +550,11 @@ MonoBehaviour:
     z: -1.358303
   simulation:
     enabled: 1
-    resolution: 35
+    resolution: 50
     solverIterations: 20
     massPerMeter: 5
     stiffness: 1
-    lengthMultiplier: 0.125
+    lengthMultiplier: 0.3
     energyLoss: 0.01
     gravityMultiplier: 1
     gravity:
