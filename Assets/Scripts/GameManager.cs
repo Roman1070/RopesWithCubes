@@ -9,9 +9,10 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private Rope _rope;
     [SerializeField] private Transform _ropeHead;
-
-    [SerializeField] private InteractableCube _currentMainCube;
-    [SerializeField] private bool _isHolding;
+    [SerializeField] private Collider _planeCollider;
+    [SerializeField, ReadOnly] private float _length;
+    private InteractableCube _currentMainCube;
+    private bool _isHolding;
 
     private RopeConnection[] _connections;
 
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        _length = _rope.GetCurrentLength();
         if (Input.GetMouseButton(0) && _isHolding)
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -94,19 +96,23 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator MoveCubeAlongTheRope(Transform cube)
     {
+        float length = _length;
         List<Vector3> positions = new List<Vector3>();
         for (int i = _rope.measurements.particleCount - 1; i >= 0; i--)
         {
-            var pos = new Vector3(_rope.GetPositionAt(i).x,0.5f, _rope.GetPositionAt(i).z);
+            var pos = new Vector3(_rope.GetPositionAt(i).x, _currentMainCube.transform.position.y, _rope.GetPositionAt(i).z);
             positions.Add(pos);
         }
 
-        float delay = 0.01f;
+        float delay = 0.025f/ length;
         var mainAnchor = _currentMainCube.RopeAttachmentPoint;
 
-        DOVirtual.DelayedCall(0.2f, () =>
+        _rope.collisions.enabled = false;
+        //_planeCollider.enabled = false;
+
+        DOVirtual.DelayedCall(0.5f* length/10f, () =>
         {
-            mainAnchor.DOMoveY(-5, 0.6f);
+            mainAnchor.DOMoveY(-4, 1.2f* length/13);
         });
         for (int i =0; i <= _rope.measurements.particleCount - 1; i++)
         {
@@ -114,5 +120,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(delay);
         }
         _rope.gameObject.SetActive(false);
+        _rope.collisions.enabled = true;
+        //_planeCollider.enabled = true;
     }
 }
