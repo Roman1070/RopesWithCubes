@@ -5,4 +5,6 @@ using UnityEngine;
 public class InteractableCube : MonoBehaviour
 {
     public Collider Collider;
+    public Rigidbody Rigidbody;
+    public Transform RopeAttachmentPoint;
 }
