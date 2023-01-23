@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
             positions.Add(pos);
         }
 
-        float delay = 0.025f/ length;
+        float delay = 0.003f;
         var mainAnchor = _currentMainCube.RopeAttachmentPoint;
 
         _rope.collisions.enabled = false;
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(delay);
         }
         var newCube = Instantiate(_cubePrefab, positions[positions.Count-1], Quaternion.identity);
-        newCube.transform.localScale = Vector3.one * 0.6f;
+        newCube.OnSpawned();
         Destroy(_currentMainCube.gameObject);
         Destroy(cube.gameObject);
 
