@@ -45,14 +45,16 @@ public class GameManager : MonoBehaviour
             {
                 if (hit.collider.TryGetComponent<InteractableCube>(out var cube))
                 {
-                    _rope.ResetToSpawnCurve();
                     _currentMainCube = cube;
                     _ropeTailConnection.transformSettings.transform = cube.RopeAttachmentPoint;
                     _ropeHeadConnection.transformSettings.transform = _ropeHead;
                     _isHolding = true;
                     _currentMainCube.Collider.enabled = false;
                     _rope.gameObject.SetActive(true);
-                    //_ropeHeadConnection.rigidbodySettings.body = cube.Rigidbody;
+                    DOVirtual.DelayedCall(0.1f, () =>
+                    {
+                        _rope.ResetToSpawnCurve();
+                    });
                 }
             }
         }
@@ -65,10 +67,8 @@ public class GameManager : MonoBehaviour
                 {
                     if (hit.collider.TryGetComponent<InteractableCube>(out var cube) && cube.gameObject!=_currentMainCube.gameObject)
                     {
-                        //_ropeHeadConnection.type = RopeConnectionType.PinTransformToRope;
                         _ropeHeadConnection.transformSettings.transform = cube.transform;
                         StartCoroutine(MoveCubeAlongTheRope(cube.transform));
-                        //_ropeHeadConnection.rigidbodySettings.body= cube.Rigidbody;
                     }
                     else _rope.gameObject.SetActive(false);
                 }
@@ -92,15 +92,16 @@ public class GameManager : MonoBehaviour
 
         float delay = 0.01f;
         var mainAnchor = _currentMainCube.RopeAttachmentPoint;
-        _rope.collisions.enabled = false;
+
         DOVirtual.DelayedCall(0.2f, () =>
         {
-            mainAnchor.DOMoveY(-2, 0.6f);
+            mainAnchor.DOMoveY(-5, 0.6f);
         });
         for (int i =0; i <= _rope.measurements.particleCount - 1; i++)
         {
             cube.DOMove(positions[i], delay);
             yield return new WaitForSeconds(delay);
         }
+        _rope.gameObject.SetActive(false);
     }
 }
