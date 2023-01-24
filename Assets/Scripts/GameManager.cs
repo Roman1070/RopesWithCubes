@@ -151,6 +151,10 @@ public class GameManager : MonoBehaviour
                      newCube.OnSpawned(recessive.Value * 2);
                      Destroy(dominant.gameObject);
                      Destroy(recessive.gameObject);
+                     DOVirtual.DelayedCall(0.2f, () =>
+                     {
+                         newCube.transform.DOMoveY(newCube.transform.position.y - 1, 0.1f);
+                     });
                  });
                 
             });
