@@ -15,8 +15,9 @@ public class GameManager : MonoBehaviour
     private InteractableCube _currentMainCube;
     private bool _isHolding;
 
-    private RopeConnection[] _connections;
+    private float _timeSinceLastInteraction;
 
+    private RopeConnection[] _connections;
     private RopeConnection _ropeHeadConnection;
     private RopeConnection _ropeTailConnection;
 
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        _timeSinceLastInteraction += Time.deltaTime;
         _length = _rope.GetCurrentLength();
         if (Input.GetMouseButton(0) && _isHolding)
         {
@@ -49,6 +51,7 @@ public class GameManager : MonoBehaviour
                 if (hit.collider.TryGetComponent<InteractableCube>(out var cube))
                 {
                     _currentMainCube = cube;
+                    cube.IsMain = true;
                     //_currentMainCube.Collider.enabled = false;
                     _ropeTailConnection.transformSettings.transform = cube.RopeAttachmentPoint;
                     _ropeHeadConnection.transformSettings.transform = _ropeHead;
@@ -80,6 +83,7 @@ public class GameManager : MonoBehaviour
                     {
                         _rope.gameObject.SetActive(false);
                         _currentMainCube.Collider.enabled = true;
+                        _currentMainCube.IsMain = false;
                         _currentMainCube = null;
                     }
                 }
@@ -87,6 +91,7 @@ public class GameManager : MonoBehaviour
                 {
                     _rope.gameObject.SetActive(false);
                     _currentMainCube.Collider.enabled = true;
+                    _currentMainCube.IsMain = false;
                     _currentMainCube = null;
                 }
 
@@ -119,13 +124,24 @@ public class GameManager : MonoBehaviour
             cube.DOMove(positions[i], delay);
             yield return new WaitForSeconds(delay);
         }
-        var newCube = Instantiate(_cubePrefab, positions[positions.Count-1], Quaternion.identity);
-        newCube.OnSpawned();
-        Destroy(_currentMainCube.gameObject);
-        Destroy(cube.gameObject);
+    }
 
+
+    public void OnCubesIntersected(InteractableCube dominant, InteractableCube recessive)
+    {
+        if (_timeSinceLastInteraction <= 1) return;
+
+        var newCube = Instantiate(_cubePrefab, dominant.transform.position, Quaternion.identity);
+        newCube.OnSpawned();
+        StopAllCoroutines();
+        DOTween.KillAll();
+        Destroy(dominant.gameObject);
+        Destroy(recessive.gameObject);
+
+        _currentMainCube.IsMain = false;
         _currentMainCube = null;
         _rope.gameObject.SetActive(false);
         _rope.collisions.enabled = true;
+        _timeSinceLastInteraction = 0;
     }
 }

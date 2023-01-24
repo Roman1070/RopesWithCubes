@@ -10,6 +10,9 @@ public class InteractableCube : MonoBehaviour
     public MeshRenderer MeshRenderer;
     public Rigidbody Rigidbody;
 
+    public bool IsMain;
+    public float Value;
+
     public void OnSpawned()
     {
         Material newMaterial = new Material(Shader.Find("Standard"));
@@ -24,5 +27,13 @@ public class InteractableCube : MonoBehaviour
     {
         Collider = GetComponent<Collider>();
         RopeAttachmentPoint = transform.GetChild(0);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.collider.TryGetComponent<InteractableCube>(out var cube))
+        {
+            FindObjectOfType<GameManager>().OnCubesIntersected(IsMain?this:cube, IsMain? cube:this);
+        }
     }
 }
