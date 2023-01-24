@@ -1,4 +1,6 @@
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,14 +14,14 @@ public class InteractableCube : MonoBehaviour
 
     public bool IsMain;
     public float Value;
+    [SerializeField] private GameObject[] _models;
 
     public void OnSpawned(float value)
     {
         Value = value;
-        Material newMaterial = new Material(Shader.Find("Standard"));
-        MeshRenderer.material = newMaterial;
-        newMaterial.color = Random.ColorHSV();
-        transform.localScale = Vector3.one * 0.6f;
+        _models.ForEach(m => m.SetActive(false));
+        _models[Convert.ToInt32(Mathf.Sqrt(value)) - 1].SetActive(true);
+        transform.localScale = Vector3.one * 0.35f;
         GetComponent<Animator>().SetTrigger("Appearence");
     }
 

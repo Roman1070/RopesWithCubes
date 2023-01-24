@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Collider _planeCollider;
     [SerializeField] private InteractableCube _cubePrefab;
     [SerializeField, ReadOnly] private float _length;
+    [SerializeField] private AnimationCurve _firstAnimCurve;
+    [SerializeField] private AnimationCurve _secondAnimCurve;
     private InteractableCube _currentMainCube;
     private bool _isHolding;
 
@@ -20,7 +22,7 @@ public class GameManager : MonoBehaviour
     private RopeConnection[] _connections;
     private RopeConnection _ropeHeadConnection;
     private RopeConnection _ropeTailConnection;
-
+    private Tween _anchorMovementTween;
 
     private void Start()
     {
@@ -51,6 +53,7 @@ public class GameManager : MonoBehaviour
                 if (hit.collider.TryGetComponent<InteractableCube>(out var cube))
                 {
                     _currentMainCube = cube;
+                    _currentMainCube.RopeAttachmentPoint.transform.localPosition = Vector3.zero;
                     cube.IsMain = true;
                     //_currentMainCube.Collider.enabled = false;
                     _ropeTailConnection.transformSettings.transform = cube.RopeAttachmentPoint;
@@ -59,7 +62,7 @@ public class GameManager : MonoBehaviour
                     _rope.gameObject.SetActive(true);
                     float radius = _rope.radius;
                     _rope.radius = 0;
-                    DOVirtual.DelayedCall(0.1f, () =>
+                    DOVirtual.DelayedCall(0.12f, () =>
                     {
                         _rope.ResetToSpawnCurve();
                         _rope.radius = radius;
@@ -110,12 +113,10 @@ public class GameManager : MonoBehaviour
             positions.Add(pos);
         }
 
-        float delay = 0.004f;
+        float delay = 0.0025f*length/10;
         var mainAnchor = _currentMainCube.RopeAttachmentPoint;
 
-        //_rope.collisions.enabled = false;
-
-        DOVirtual.DelayedCall(0.5f* length/10f, () =>
+        _anchorMovementTween = DOVirtual.DelayedCall(0.4f* length/10f, () =>
         {
             mainAnchor.DOMoveY(-4, 1.2f* length/13);
         });
@@ -131,17 +132,34 @@ public class GameManager : MonoBehaviour
     {
         if (_timeSinceLastInteraction <= 1) return;
 
-        if(dominant.Value == recessive.Value)
+        float firstAnimDuration = 0.5f;
+        float secondAnimDuration = 0.4f;
+        if (dominant.Value == recessive.Value)
         {
-            var newCube = Instantiate(_cubePrefab, dominant.transform.position, Quaternion.identity);
-            newCube.OnSpawned(recessive.Value*2);
-            Destroy(dominant.gameObject);
-            Destroy(recessive.gameObject);
+            dominant.Rigidbody.isKinematic = true;
+            recessive.Rigidbody.isKinematic = true;
+            
+            dominant.transform.DOMove(dominant.transform.position + dominant.transform.up - dominant.transform.forward, firstAnimDuration).SetEase(_firstAnimCurve);
+            recessive.transform.DOMove(dominant.transform.position + dominant.transform.up + dominant.transform.forward, firstAnimDuration).SetEase(_firstAnimCurve);
+            DOVirtual.DelayedCall(firstAnimDuration, ()=>
+            {
+                dominant.transform.DOMove(dominant.transform.position + dominant.transform.forward, secondAnimDuration).SetEase(_secondAnimCurve);
+                recessive.transform.DOMove(dominant.transform.position + dominant.transform.forward, secondAnimDuration).SetEase(_secondAnimCurve);
+                DOVirtual.DelayedCall(secondAnimDuration, () =>
+                 {
+                     var newCube = Instantiate(_cubePrefab, dominant.transform.position, Quaternion.identity);
+                     newCube.OnSpawned(recessive.Value * 2);
+                     Destroy(dominant.gameObject);
+                     Destroy(recessive.gameObject);
+                 });
+                
+            });
+           
         }
         
         DOVirtual.DelayedCall(0.1f,()=>
-        { 
-            DOTween.KillAll();
+        {
+            _anchorMovementTween.Kill();
             StopAllCoroutines();
         });
 
