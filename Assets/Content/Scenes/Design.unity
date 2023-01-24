@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.19248904, g: 0.22770214, b: 0.2930125, a: 1}
+  m_IndirectSpecularColor: {r: 0.19250065, g: 0.22769392, b: 0.29300886, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -225,7 +225,7 @@ MonoBehaviour:
   _planeCollider: {fileID: 0}
   _cubePrefab: {fileID: 3374602473574814177, guid: 60b7e8d31d59d9e46a0632b06ccf5911, type: 3}
   _length: 0
-  _firstAnimCurve:
+  _movementForwardAnimCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -249,7 +249,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _secondAnimCurve:
+  _movementUprwardAnimCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -273,7 +273,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  IsMovingCubes: 0
+  _movementForwardAnimDuration: 0.35
+  _movementUpwardAnimDuration: 0.3
+  _delayBeforeFalling: 0.25
 --- !u!1 &162236691
 GameObject:
   m_ObjectHideFlags: 0

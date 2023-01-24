@@ -9,6 +9,7 @@ public class Column : MonoBehaviour
     [SerializeField] private ParticleSystem _frictionVfx;
 
     [SerializeField, ReadOnly] private bool _isTouchedByRope;
+    [SerializeField, ReadOnly] private bool isPlaying;
     [SerializeField, ReadOnly] private float _closestDistance;
     private Rope _rope;
     private GameManager _manager;
@@ -22,11 +23,20 @@ public class Column : MonoBehaviour
     private void Update()
     {
         _rope.GetClosestParticle(transform.position, out var index, out var distance);
+        _isTouchedByRope = distance < 0.6f;
         _closestDistance = distance;
-        _isTouchedByRope = distance < 0.8f;
+        if (_manager.IsMovingCubes && _isTouchedByRope)
+        {
+            if (!_frictionVfx.isPlaying)
+            {
+                _frictionVfx.Play();
+            }
+        }
+        else
+        {
+            _frictionVfx.Stop();
+        }
 
-        if (_isTouchedByRope && !_frictionVfx.isPlaying && _manager.IsMovingCubes)
-            _frictionVfx.Play();
-        else _frictionVfx.Stop();
+
     }
 }

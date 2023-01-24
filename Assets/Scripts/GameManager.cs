@@ -12,8 +12,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Collider _planeCollider;
     [SerializeField] private InteractableCube _cubePrefab;
     [SerializeField, ReadOnly] private float _length;
-    [SerializeField] private AnimationCurve _firstAnimCurve;
-    [SerializeField] private AnimationCurve _secondAnimCurve;
+
+    [Header("Animation Settings")]
+
+    [SerializeField] private AnimationCurve _movementForwardAnimCurve;
+    [SerializeField] private AnimationCurve _movementUprwardAnimCurve;
+    [SerializeField] private float _movementForwardAnimDuration;
+    [SerializeField] private float _movementUpwardAnimDuration;
+    [SerializeField] private float _delayBeforeFalling;
     private InteractableCube _currentMainCube;
     private bool _isHolding;
 
@@ -25,7 +31,7 @@ public class GameManager : MonoBehaviour
     private Tween _anchorMovementTween;
 
 
-    public bool IsMovingCubes;
+    public bool IsMovingCubes { get; private set; }
     private void Start()
     {
         _rope.gameObject.SetActive(false);
@@ -136,27 +142,26 @@ public class GameManager : MonoBehaviour
     {
         if (_timeSinceLastInteraction <= 1) return;
         IsMovingCubes = true;
-        float firstAnimDuration = 0.35f;
-        float secondAnimDuration = 0.3f;
+
         if (dominant.Value == recessive.Value)
         {
             dominant.Rigidbody.isKinematic = true;
             recessive.Rigidbody.isKinematic = true;
             
-            dominant.transform.DOMove(dominant.transform.position + dominant.transform.up*3 - dominant.transform.forward, firstAnimDuration).SetEase(_firstAnimCurve);
-            recessive.transform.DOMove(dominant.transform.position + dominant.transform.up*3 + dominant.transform.forward, firstAnimDuration).SetEase(_firstAnimCurve);
-            DOVirtual.DelayedCall(firstAnimDuration, ()=>
+            dominant.transform.DOMove(dominant.transform.position + dominant.transform.up*3 - dominant.transform.forward, _movementForwardAnimDuration).SetEase(_movementForwardAnimCurve);
+            recessive.transform.DOMove(dominant.transform.position + dominant.transform.up*3 + dominant.transform.forward, _movementForwardAnimDuration).SetEase(_movementForwardAnimCurve);
+            DOVirtual.DelayedCall(_movementForwardAnimDuration, ()=>
             {
-                dominant.transform.DOMove(dominant.transform.position + dominant.transform.forward, secondAnimDuration).SetEase(_secondAnimCurve);
-                recessive.transform.DOMove(dominant.transform.position + dominant.transform.forward, secondAnimDuration).SetEase(_secondAnimCurve);
-                DOVirtual.DelayedCall(secondAnimDuration, () =>
+                dominant.transform.DOMove(dominant.transform.position + dominant.transform.forward, _movementUpwardAnimDuration).SetEase(_movementUprwardAnimCurve);
+                recessive.transform.DOMove(dominant.transform.position + dominant.transform.forward, _movementUpwardAnimDuration).SetEase(_movementUprwardAnimCurve);
+                DOVirtual.DelayedCall(_movementUpwardAnimDuration, () =>
                  {
                      var newCube = Instantiate(_cubePrefab, dominant.transform.position, Quaternion.identity);
                      newCube.OnSpawned(recessive.Value * 2);
                      newCube.Rigidbody.isKinematic = true;
                      Destroy(dominant.gameObject);
                      Destroy(recessive.gameObject);
-                     DOVirtual.DelayedCall(0.25f, () =>
+                     DOVirtual.DelayedCall(_delayBeforeFalling, () =>
                      {
                          newCube.Rigidbody.isKinematic = false;
                      });
