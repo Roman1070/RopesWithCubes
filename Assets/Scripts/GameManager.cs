@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     private RopeConnection _ropeTailConnection;
     private Tween _anchorMovementTween;
 
+
+    public bool IsMovingCubes;
     private void Start()
     {
         _rope.gameObject.SetActive(false);
@@ -42,7 +44,7 @@ public class GameManager : MonoBehaviour
             if (Physics.Raycast(ray, out var hit))
             {
                 var pos = hit.point;
-                _ropeHead.position = pos;
+                _ropeHead.position = new Vector3(pos.x,-0.32f,pos.z);
             }
         }
         if (Input.GetMouseButtonDown(0))
@@ -105,6 +107,7 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator MoveCubeAlongTheRope(Transform cube)
     {
+        IsMovingCubes = true;
         float length = _length;
         List<Vector3> positions = new List<Vector3>();
         for (int i = _rope.measurements.particleCount - 1; i >= 0; i--)
@@ -125,13 +128,14 @@ public class GameManager : MonoBehaviour
             cube.DOMove(positions[i], delay);
             yield return new WaitForSeconds(delay);
         }
+        IsMovingCubes = false;
     }
 
 
     public void OnCubesIntersected(InteractableCube dominant, InteractableCube recessive)
     {
         if (_timeSinceLastInteraction <= 1) return;
-
+        IsMovingCubes = true;
         float firstAnimDuration = 0.5f;
         float secondAnimDuration = 0.4f;
         if (dominant.Value == recessive.Value)
@@ -153,7 +157,7 @@ public class GameManager : MonoBehaviour
                      Destroy(recessive.gameObject);
                      DOVirtual.DelayedCall(0.2f, () =>
                      {
-                         newCube.transform.DOMoveY(newCube.transform.position.y - 1, 0.1f);
+                         newCube.transform.DOMoveY(0.02f, 0.1f);
                      });
                  });
                 
@@ -169,6 +173,8 @@ public class GameManager : MonoBehaviour
 
         _currentMainCube.IsMain = false;
         _currentMainCube = null;
+        IsMovingCubes = false;
+
         _rope.gameObject.SetActive(false);
         _rope.collisions.enabled = true;
         _timeSinceLastInteraction = 0;
