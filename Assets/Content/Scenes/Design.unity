@@ -279,7 +279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rope: {fileID: 162236694}
   _ropeHead: {fileID: 1951591011}
-  _planeCollider: {fileID: 608012859}
+  _planeCollider: {fileID: 0}
   _cubePrefab: {fileID: 3374602473574814177, guid: 60b7e8d31d59d9e46a0632b06ccf5911, type: 3}
   _length: 0
 --- !u!1 &162236691
@@ -614,6 +614,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: c3421d65d4fe0433b89bee9092e5862b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: c3421d65d4fe0433b89bee9092e5862b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 4113d581b2272485b966e29b06e65ce3, type: 2}
@@ -730,8 +734,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c3421d65d4fe0433b89bee9092e5862b, type: 3}
   m_PrefabInstance: {fileID: 413787050}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &608012859
-BoxCollider:
+--- !u!64 &608012863
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -740,9 +744,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.0000012, y: 0.22245656, z: 3.8000007}
-  m_Center: {x: 0, y: -0.60227174, z: 0.00000014993323}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: c3421d65d4fe0433b89bee9092e5862b, type: 3}
 --- !u!1001 &608185199
 PrefabInstance:
   m_ObjectHideFlags: 0
