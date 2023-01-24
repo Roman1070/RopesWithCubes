@@ -8,6 +8,7 @@ public class InteractableCube : MonoBehaviour
     public Collider Collider;
     public Transform RopeAttachmentPoint;
     public MeshRenderer MeshRenderer;
+    public Rigidbody Rigidbody;
 
     public void OnSpawned()
     {

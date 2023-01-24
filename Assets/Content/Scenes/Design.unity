@@ -363,7 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 325b217b839086b4ca705834516bc0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0.04
+  radius: 0.072
   radialVertices: 6
   isLoop: 0
   material: {fileID: 2100000, guid: 667c6825583fb417e9779e9417a345dc, type: 2}
@@ -741,8 +741,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.0000012, y: 0.37238768, z: 3.8000007}
-  m_Center: {x: 0, y: -0.6772371, z: 0.00000014993324}
+  m_Size: {x: 2.0000012, y: 0.22245656, z: 3.8000007}
+  m_Center: {x: 0, y: -0.60227174, z: 0.00000014993323}
 --- !u!1001 &608185199
 PrefabInstance:
   m_ObjectHideFlags: 0

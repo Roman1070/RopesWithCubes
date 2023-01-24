@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
                 if (hit.collider.TryGetComponent<InteractableCube>(out var cube))
                 {
                     _currentMainCube = cube;
-                    _currentMainCube.Collider.enabled = false;
+                    //_currentMainCube.Collider.enabled = false;
                     _ropeTailConnection.transformSettings.transform = cube.RopeAttachmentPoint;
                     _ropeHeadConnection.transformSettings.transform = _ropeHead;
                     _isHolding = true;
@@ -105,10 +105,10 @@ public class GameManager : MonoBehaviour
             positions.Add(pos);
         }
 
-        float delay = 0.003f;
+        float delay = 0.004f;
         var mainAnchor = _currentMainCube.RopeAttachmentPoint;
 
-        _rope.collisions.enabled = false;
+        //_rope.collisions.enabled = false;
 
         DOVirtual.DelayedCall(0.5f* length/10f, () =>
         {
