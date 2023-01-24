@@ -13,8 +13,9 @@ public class InteractableCube : MonoBehaviour
     public bool IsMain;
     public float Value;
 
-    public void OnSpawned()
+    public void OnSpawned(float value)
     {
+        Value = value;
         Material newMaterial = new Material(Shader.Find("Standard"));
         MeshRenderer.material = newMaterial;
         newMaterial.color = Random.ColorHSV();

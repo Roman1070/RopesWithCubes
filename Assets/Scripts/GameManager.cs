@@ -131,12 +131,19 @@ public class GameManager : MonoBehaviour
     {
         if (_timeSinceLastInteraction <= 1) return;
 
-        var newCube = Instantiate(_cubePrefab, dominant.transform.position, Quaternion.identity);
-        newCube.OnSpawned();
-        StopAllCoroutines();
-        DOTween.KillAll();
-        Destroy(dominant.gameObject);
-        Destroy(recessive.gameObject);
+        if(dominant.Value == recessive.Value)
+        {
+            var newCube = Instantiate(_cubePrefab, dominant.transform.position, Quaternion.identity);
+            newCube.OnSpawned(recessive.Value*2);
+            Destroy(dominant.gameObject);
+            Destroy(recessive.gameObject);
+        }
+        
+        DOVirtual.DelayedCall(0.1f,()=>
+        { 
+            DOTween.KillAll();
+            StopAllCoroutines();
+        });
 
         _currentMainCube.IsMain = false;
         _currentMainCube = null;
