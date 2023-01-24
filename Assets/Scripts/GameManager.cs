@@ -136,15 +136,15 @@ public class GameManager : MonoBehaviour
     {
         if (_timeSinceLastInteraction <= 1) return;
         IsMovingCubes = true;
-        float firstAnimDuration = 0.5f;
-        float secondAnimDuration = 0.4f;
+        float firstAnimDuration = 0.35f;
+        float secondAnimDuration = 0.3f;
         if (dominant.Value == recessive.Value)
         {
             dominant.Rigidbody.isKinematic = true;
             recessive.Rigidbody.isKinematic = true;
             
-            dominant.transform.DOMove(dominant.transform.position + dominant.transform.up - dominant.transform.forward, firstAnimDuration).SetEase(_firstAnimCurve);
-            recessive.transform.DOMove(dominant.transform.position + dominant.transform.up + dominant.transform.forward, firstAnimDuration).SetEase(_firstAnimCurve);
+            dominant.transform.DOMove(dominant.transform.position + dominant.transform.up*3 - dominant.transform.forward, firstAnimDuration).SetEase(_firstAnimCurve);
+            recessive.transform.DOMove(dominant.transform.position + dominant.transform.up*3 + dominant.transform.forward, firstAnimDuration).SetEase(_firstAnimCurve);
             DOVirtual.DelayedCall(firstAnimDuration, ()=>
             {
                 dominant.transform.DOMove(dominant.transform.position + dominant.transform.forward, secondAnimDuration).SetEase(_secondAnimCurve);
@@ -153,11 +153,12 @@ public class GameManager : MonoBehaviour
                  {
                      var newCube = Instantiate(_cubePrefab, dominant.transform.position, Quaternion.identity);
                      newCube.OnSpawned(recessive.Value * 2);
+                     newCube.Rigidbody.isKinematic = true;
                      Destroy(dominant.gameObject);
                      Destroy(recessive.gameObject);
-                     DOVirtual.DelayedCall(0.2f, () =>
+                     DOVirtual.DelayedCall(0.25f, () =>
                      {
-                         newCube.transform.DOMoveY(0.02f, 0.1f);
+                         newCube.Rigidbody.isKinematic = false;
                      });
                  });
                 
