@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
                 if (hit.collider.TryGetComponent<InteractableCube>(out var cube))
                 {
                     _currentMainCube = cube;
+                    cube.PlayBounceAnim();
                     _currentMainCube.RopeAttachmentPoint.transform.localPosition = Vector3.zero;
                     cube.IsMain = true;
                     //_currentMainCube.Collider.enabled = false;
@@ -147,7 +148,12 @@ public class GameManager : MonoBehaviour
         {
             dominant.Rigidbody.isKinematic = true;
             recessive.Rigidbody.isKinematic = true;
-            
+
+            dominant.SmokeTrail.Stop();
+            recessive.SmokeTrail.Stop();
+            dominant.SmokeTrail.transform.parent = null;
+            recessive.SmokeTrail.transform.parent = null;
+
             dominant.transform.DOMove(dominant.transform.position + dominant.transform.up*3 - dominant.transform.forward, _movementForwardAnimDuration).SetEase(_movementForwardAnimCurve);
             recessive.transform.DOMove(dominant.transform.position + dominant.transform.up*3 + dominant.transform.forward, _movementForwardAnimDuration).SetEase(_movementForwardAnimCurve);
             DOVirtual.DelayedCall(_movementForwardAnimDuration, ()=>
@@ -158,6 +164,7 @@ public class GameManager : MonoBehaviour
                  {
                      var newCube = Instantiate(_cubePrefab, dominant.transform.position, Quaternion.identity);
                      newCube.OnSpawned(recessive.Value * 2);
+                     newCube.SmokeTrail.Stop();
                      newCube.Rigidbody.isKinematic = true;
                      Destroy(dominant.gameObject);
                      Destroy(recessive.gameObject);

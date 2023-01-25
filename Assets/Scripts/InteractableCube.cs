@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using System;
@@ -11,6 +12,7 @@ public class InteractableCube : MonoBehaviour
     public Transform RopeAttachmentPoint;
     public MeshRenderer MeshRenderer;
     public Rigidbody Rigidbody;
+    public ParticleSystem SmokeTrail;
 
     public bool IsMain;
     public float Value;
@@ -22,6 +24,16 @@ public class InteractableCube : MonoBehaviour
         _models.ForEach(m => m.SetActive(false));
         _models[Convert.ToInt32(Mathf.Sqrt(value)) - 1].SetActive(true);
         transform.localScale = Vector3.one * 0.35f;
+        GetComponent<Animator>().SetTrigger("Appearence");
+
+        DOVirtual.DelayedCall(1, () =>
+        {
+            SmokeTrail.Play();
+        });
+    }
+
+    public void PlayBounceAnim()
+    {
         GetComponent<Animator>().SetTrigger("Appearence");
     }
 

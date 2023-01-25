@@ -514,6 +514,7 @@ MonoBehaviour:
   RopeAttachmentPoint: {fileID: 6841849153986545031}
   MeshRenderer: {fileID: 6048329725352461700}
   Rigidbody: {fileID: 7542208005736296767}
+  SmokeTrail: {fileID: 7556015390102156633}
   IsMain: 0
   Value: 2
   _models:
@@ -5548,6 +5549,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bff3d95f687092458215d6af5ecc998, type: 3}
+--- !u!198 &7556015390102156633 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 19884158, guid: 1bff3d95f687092458215d6af5ecc998, type: 3}
+  m_PrefabInstance: {fileID: 7556015390116224295}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7556015390116393737 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 437806, guid: 1bff3d95f687092458215d6af5ecc998, type: 3}
