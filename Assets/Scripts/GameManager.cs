@@ -115,6 +115,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator MoveCubeAlongTheRope(Transform cube)
     {
         IsMovingCubes = true;
+        
         float length = _length;
         List<Vector3> positions = new List<Vector3>();
         for (int i = _rope.measurements.particleCount - 1; i >= 0; i--)

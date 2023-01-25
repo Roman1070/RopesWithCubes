@@ -9,14 +9,17 @@ using UnityEngine;
 public class InteractableCube : MonoBehaviour
 {
     public Collider Collider;
+    public Transform ModelsHolder;
     public Transform RopeAttachmentPoint;
     public MeshRenderer MeshRenderer;
     public Rigidbody Rigidbody;
     public ParticleSystem SmokeTrail;
+    public ParticleSystem AppearenceEffect;
 
     public bool IsMain;
     public float Value;
     [SerializeField] private GameObject[] _models;
+    [SerializeField] private AnimationCurve _parabola;
 
     public void OnSpawned(float value)
     {
@@ -25,7 +28,7 @@ public class InteractableCube : MonoBehaviour
         _models[Convert.ToInt32(Mathf.Sqrt(value)) - 1].SetActive(true);
         transform.localScale = Vector3.one * 0.35f;
         GetComponent<Animator>().SetTrigger("Appearence");
-
+        AppearenceEffect.Play();
         DOVirtual.DelayedCall(1, () =>
         {
             SmokeTrail.Play();
@@ -46,9 +49,23 @@ public class InteractableCube : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.TryGetComponent<InteractableCube>(out var cube))
+        if (collision.collider.TryGetComponent<InteractableCube>(out var cube))
         {
-            FindObjectOfType<GameManager>().OnCubesIntersected(IsMain?this:cube, IsMain? cube:this);
+            FindObjectOfType<GameManager>().OnCubesIntersected(IsMain ? this : cube, IsMain ? cube : this);
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+       
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.transform.parent.TryGetComponent<Column>(out var column))
+        {
+            Vector3 columnToCubeVector = (transform.position - column.transform.position).normalized;
+            ModelsHolder.transform.DOLocalMove( columnToCubeVector * transform.localScale.x*3f,0.05f);
         }
     }
 }
