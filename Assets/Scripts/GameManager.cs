@@ -168,7 +168,7 @@ public class GameManager : MonoBehaviour
             positions.Add(pos);
         }
 
-        float delay = 0.0025f*length/10;
+        float delay = 0.0015f*length/10;
         var mainAnchor = _currentMainCube.RopeAttachmentPoint;
 
         _anchorMovementTween = DOVirtual.DelayedCall(0.4f* length/10f, () =>
