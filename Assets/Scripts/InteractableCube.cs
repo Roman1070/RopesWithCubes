@@ -18,6 +18,7 @@ public class InteractableCube : MonoBehaviour
 
     public bool IsMain;
     public float Value;
+    [SerializeField] private float _startLocalScale;
     [SerializeField] private GameObject[] _models;
     [SerializeField] private AnimationCurve _parabola;
 
@@ -26,7 +27,7 @@ public class InteractableCube : MonoBehaviour
         Value = value;
         _models.ForEach(m => m.SetActive(false));
         _models[Convert.ToInt32(Mathf.Sqrt(value)) - 1].SetActive(true);
-        transform.localScale = Vector3.one * 0.35f;
+        transform.localScale = Vector3.one * _startLocalScale;
         GetComponent<Animator>().SetTrigger("Appearence");
         AppearenceEffect.Play();
         DOVirtual.DelayedCall(1, () =>

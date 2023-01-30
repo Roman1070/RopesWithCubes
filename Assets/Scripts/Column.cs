@@ -16,8 +16,8 @@ public class Column : MonoBehaviour
 
     private void Start()
     {
-        _rope = FindObjectOfType<Rope>();    
-        _manager = FindObjectOfType<GameManager>();
+        _rope = FindObjectOfType<Rope>(true);    
+        _manager = FindObjectOfType<GameManager>(true);
     }
 
     private void Update()

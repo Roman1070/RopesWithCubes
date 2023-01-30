@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        Application.targetFrameRate = 100;
         _rope.gameObject.SetActive(false);
         _connections = _rope.GetComponentsInChildren<RopeConnection>();
         _ropeHeadConnection = _connections[0];
@@ -168,10 +169,10 @@ public class GameManager : MonoBehaviour
             positions.Add(pos);
         }
 
-        float delay = 0.0015f*length/10;
+        float delay = 0.0001f*length/20;
         var mainAnchor = _currentMainCube.RopeAttachmentPoint;
 
-        _anchorMovementTween = DOVirtual.DelayedCall(0.4f* length/10f, () =>
+        _anchorMovementTween = DOVirtual.DelayedCall(1.5f* length/10f, () =>
         {
             mainAnchor.DOMoveY(-4, 1.2f* length/13);
         });
