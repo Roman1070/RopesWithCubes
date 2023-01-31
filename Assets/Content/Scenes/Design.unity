@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1924986, g: 0.22769149, b: 0.29300874, a: 1}
+  m_IndirectSpecularColor: {r: 0.19210458, g: 0.22769776, b: 0.29358107, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -220,6 +220,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae56923cd14dcfc47adf9a8bd5b02f68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _colorRed:
+    serializedVersion: 2
+    rgba: 6182655
+  _colorGreen:
+    serializedVersion: 2
+    rgba: 5701541
+  _colorYellow:
+    serializedVersion: 2
+    rgba: 5701631
+  _colorBlue:
+    serializedVersion: 2
+    rgba: 16758870
   _rope: {fileID: 162236694}
   _ropeHead: {fileID: 1951591011}
   _planeCollider: {fileID: 0}
@@ -461,7 +473,7 @@ MonoBehaviour:
     solverIterations: 20
     massPerMeter: 5
     stiffness: 1
-    lengthMultiplier: 0.3
+    lengthMultiplier: 0.207
     energyLoss: 0.01
     gravityMultiplier: 1
     gravity:
@@ -555,6 +567,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 183604808944232911, guid: 60b7e8d31d59d9e46a0632b06ccf5911, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3374602473574814176, guid: 60b7e8d31d59d9e46a0632b06ccf5911, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -673,6 +689,7 @@ GameObject:
   - component: {fileID: 295528535}
   - component: {fileID: 295528537}
   - component: {fileID: 295528536}
+  - component: {fileID: 295528538}
   m_Layer: 0
   m_Name: Plane (3)
   m_TagString: Untagged
@@ -744,6 +761,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295528534}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!64 &295528538
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295528534}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &370646145 stripped
 GameObject:
