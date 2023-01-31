@@ -66,7 +66,7 @@ public class InteractableCube : MonoBehaviour
         if (other.transform.parent.TryGetComponent<Column>(out var column))
         {
             Vector3 columnToCubeVector = (transform.position - column.transform.position).normalized;
-            ModelsHolder.transform.DOLocalMove( columnToCubeVector * transform.localScale.x*3f,0.05f);
+            ModelsHolder.transform.DOLocalMove( columnToCubeVector * transform.localScale.x*2f,0.05f);
         }
     }
 }
