@@ -403,7 +403,7 @@ MonoBehaviour:
   radius: 0.072
   radialVertices: 7
   isLoop: 0
-  material: {fileID: 2100000, guid: 667c6825583fb417e9779e9417a345dc, type: 2}
+  material: {fileID: 2100000, guid: 189732c736fdb544f98524f96c34aff6, type: 2}
   customMesh: {fileID: 0}
   customMeshRotation: 90
   spawnPoints:

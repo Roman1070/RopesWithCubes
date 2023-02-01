@@ -219,12 +219,12 @@ public class GameManager : MonoBehaviour
             dominant.SmokeTrail.transform.parent = null;
             recessive.SmokeTrail.transform.parent = null;
 
-            dominant.transform.DOMove(dominant.transform.position + dominant.transform.up*3 - dominant.transform.forward, _movementForwardAnimDuration).SetEase(_movementForwardAnimCurve);
-            recessive.transform.DOMove(dominant.transform.position + dominant.transform.up*3 + dominant.transform.forward, _movementForwardAnimDuration).SetEase(_movementForwardAnimCurve);
+            dominant.transform.DOMove(dominant.transform.position + dominant.transform.up*3 - dominant.transform.forward* 1.5f, _movementForwardAnimDuration).SetEase(_movementForwardAnimCurve);
+            recessive.transform.DOMove(dominant.transform.position + dominant.transform.up*3 + dominant.transform.forward* 1.5f, _movementForwardAnimDuration).SetEase(_movementForwardAnimCurve);
             DOVirtual.DelayedCall(_movementForwardAnimDuration, ()=>
             {
-                dominant.transform.DOMove(dominant.transform.position + dominant.transform.forward, _movementUpwardAnimDuration).SetEase(_movementUprwardAnimCurve);
-                recessive.transform.DOMove(dominant.transform.position + dominant.transform.forward, _movementUpwardAnimDuration).SetEase(_movementUprwardAnimCurve);
+                dominant.transform.DOMove(dominant.transform.position + dominant.transform.forward* 1.5f, _movementUpwardAnimDuration).SetEase(_movementUprwardAnimCurve);
+                recessive.transform.DOMove(dominant.transform.position + dominant.transform.forward*1.5f, _movementUpwardAnimDuration).SetEase(_movementUprwardAnimCurve);
                 DOVirtual.DelayedCall(_movementUpwardAnimDuration, () =>
                  {
                      var newCube = Instantiate(_cubePrefab, dominant.transform.position, Quaternion.identity);
