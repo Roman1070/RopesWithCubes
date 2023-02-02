@@ -19,14 +19,24 @@ public class InteractableCube : MonoBehaviour
     public bool IsMain;
     public float Value;
     [SerializeField] private float _startLocalScale;
-    [SerializeField] private GameObject[] _models;
+    [SerializeField] private MeshRenderer[] _fracturedParts;
+    [SerializeField] private Rigidbody[] _fracturedPartsRbs;
+    [SerializeField] private Collider[] _fracturedPartsColliders;
     [SerializeField] private AnimationCurve _parabola;
+    [SerializeField] private Material[] _colors;
+
+    private void Awake()
+    {
+        _fracturedPartsColliders.ForEach(c => c.enabled = false);
+    }
 
     public void OnSpawned(float value)
     {
         Value = value;
-        _models.ForEach(m => m.SetActive(false));
-        _models[Convert.ToInt32(Mathf.Sqrt(value)) - 1].SetActive(true);
+        foreach(var part in _fracturedParts)
+        {
+            part.material = _colors[Convert.ToInt32(Mathf.Sqrt(value)) - 1];
+        }
         transform.localScale = Vector3.one * _startLocalScale;
         GetComponent<Animator>().SetTrigger("Appearence");
         AppearenceEffect.Play();
@@ -34,6 +44,16 @@ public class InteractableCube : MonoBehaviour
         {
             SmokeTrail.Play();
         });
+    }
+
+    public void Destroy()
+    {
+        foreach(var part in _fracturedPartsRbs)
+        {
+            _fracturedPartsColliders.ForEach(c => c.enabled = true);
+            part.isKinematic = false;
+            part.AddExplosionForce(30, transform.position, 10,1,ForceMode.Impulse);
+        }
     }
 
     public void PlayBounceAnim()
@@ -66,7 +86,7 @@ public class InteractableCube : MonoBehaviour
         if (other.transform.parent.TryGetComponent<Column>(out var column))
         {
             Vector3 columnToCubeVector = (transform.position - column.transform.position).normalized;
-            ModelsHolder.transform.DOLocalMove( columnToCubeVector * transform.localScale.x*1.5f,0.05f);
+            ModelsHolder.transform.DOLocalMove( columnToCubeVector * transform.localScale.x*1.2f,0.05f);
         }
     }
 }

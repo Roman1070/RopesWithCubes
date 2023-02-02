@@ -227,7 +227,7 @@ public class GameManager : MonoBehaviour
                 recessive.transform.DOMove(dominant.transform.position + dominant.transform.forward*1.5f, _movementUpwardAnimDuration).SetEase(_movementUprwardAnimCurve);
                 DOVirtual.DelayedCall(_movementUpwardAnimDuration, () =>
                  {
-                     var newCube = Instantiate(_cubePrefab, dominant.transform.position, Quaternion.identity);
+                     /*var newCube = Instantiate(_cubePrefab, dominant.transform.position, Quaternion.identity);
                      newCube.OnSpawned(recessive.Value * 2);
                      newCube.SmokeTrail.Stop();
                      newCube.Rigidbody.isKinematic = true;
@@ -236,7 +236,9 @@ public class GameManager : MonoBehaviour
                      DOVirtual.DelayedCall(_delayBeforeFalling, () =>
                      {
                          newCube.Rigidbody.isKinematic = false;
-                     });
+                     });*/
+                     dominant.Destroy();
+                     recessive.Destroy();
                  });
                 
             });
