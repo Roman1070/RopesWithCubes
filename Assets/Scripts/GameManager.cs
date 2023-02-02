@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     private RopeConnection[] _connections;
     private RopeConnection _ropeHeadConnection;
     private RopeConnection _ropeTailConnection;
-    private Tween _anchorMovementTween;
+    private Tween _movementTween;
 
 
     public bool IsMovingCubes { get; private set; }
@@ -192,20 +192,26 @@ public class GameManager : MonoBehaviour
         float delay = 0.0001f*length/30;
         var mainAnchor = _currentMainCube.RopeAttachmentPoint;
 
-        _anchorMovementTween = DOVirtual.DelayedCall(1.5f* length/10f, () =>
-        {
-            //mainAnchor.DOMoveY(-4, 1.2f* length/13);
-        });
-        /*for (int i =0; i <= _rope.measurements.particleCount - 1; i++)
-        {
-            cube.DOMove(positions[i], delay);
-            yield return new WaitForSeconds(delay);
-        }*/
-        cube.DOPath(positions.ToArray(), length/8f).SetEase(_movementAnimCurve);
+        _movementTween = cube.DOPath(positions.ToArray(), length/8f).SetEase(_movementAnimCurve);
         IsMovingCubes = false;
         yield return new WaitForSeconds(delay);
     }
 
+    public void OnHitObstacle(InteractableCube cube)
+    {
+        _movementTween.Kill();
+        cube.Destroy();
+        if (_currentMainCube != null)
+        {
+            _currentMainCube.IsMain = false;
+            _currentMainCube = null;
+            IsMovingCubes = false;
+
+            _rope.gameObject.SetActive(false);
+            _rope.collisions.enabled = true;
+            _timeSinceLastInteraction = 0;
+        }
+    }
 
     public void OnCubesIntersected(InteractableCube dominant, InteractableCube recessive)
     {
@@ -247,12 +253,7 @@ public class GameManager : MonoBehaviour
             Destroy(recessive.gameObject);
 
         }
-        
-        DOVirtual.DelayedCall(0.1f,()=>
-        {
-            _anchorMovementTween.Kill();
-            StopAllCoroutines();
-        });
+        _movementTween.Kill();
 
         if (_currentMainCube != null)
         {

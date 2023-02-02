@@ -85,6 +85,10 @@ public class InteractableCube : MonoBehaviour
         {
             FindObjectOfType<GameManager>().OnCubesIntersected(this, cube);
         }
+        if (collision.collider.TryGetComponent<Obstacle>(out var obstacle))
+        {
+            FindObjectOfType<GameManager>().OnHitObstacle(this);
+        }
     }
 
     private void OnCollisionStay(Collision collision)
