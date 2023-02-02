@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 39330562}
   - component: {fileID: 39330561}
   - component: {fileID: 39330564}
+  - component: {fileID: 39330565}
   m_Layer: 0
   m_Name: Main CameraPerspective
   m_TagString: MainCamera
@@ -372,6 +373,39 @@ MonoBehaviour:
   _movementForwardAnimDuration: 0.35
   _movementUpwardAnimDuration: 0.3
   _delayBeforeFalling: 0.25
+--- !u!114 &39330565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39330560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &82563509
 GameObject:
   m_ObjectHideFlags: 0
@@ -688,7 +722,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1131778225795711512, guid: 81838e25bfa71454295b009c7d3c63e0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.45
+      value: -0.03999999
       objectReference: {fileID: 0}
     - target: {fileID: 1131778225795711512, guid: 81838e25bfa71454295b009c7d3c63e0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -899,7 +933,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1131778225795711512, guid: 81838e25bfa71454295b009c7d3c63e0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.45
+      value: -0.04
       objectReference: {fileID: 0}
     - target: {fileID: 1131778225795711512, guid: 81838e25bfa71454295b009c7d3c63e0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1005,7 +1039,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: d7afe0fa02ba9f9459a639978b71a243, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4113d581b2272485b966e29b06e65ce3, type: 2}
+      objectReference: {fileID: 2100000, guid: fc9be78fb698847d79fad2b517f364d3, type: 2}
     - target: {fileID: 919132149155446097, guid: d7afe0fa02ba9f9459a639978b71a243, type: 3}
       propertyPath: m_Name
       value: Stopper2 (3)
@@ -3346,7 +3380,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1695306995
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4212,7 +4246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1131778225795711512, guid: 81838e25bfa71454295b009c7d3c63e0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.45
+      value: -0.03999999
       objectReference: {fileID: 0}
     - target: {fileID: 1131778225795711512, guid: 81838e25bfa71454295b009c7d3c63e0, type: 3}
       propertyPath: m_LocalPosition.z
