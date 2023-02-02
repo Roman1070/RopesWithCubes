@@ -225,7 +225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &39330561
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2618,7 +2618,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1345066584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2631,6 +2631,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae56923cd14dcfc47adf9a8bd5b02f68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _colorRed:
+    serializedVersion: 2
+    rgba: 6182655
+  _colorGreen:
+    serializedVersion: 2
+    rgba: 5701541
+  _colorYellow:
+    serializedVersion: 2
+    rgba: 5701631
+  _colorBlue:
+    serializedVersion: 2
+    rgba: 16758870
   _rope: {fileID: 162236694}
   _ropeHead: {fileID: 1951591011}
   _planeCollider: {fileID: 0}
