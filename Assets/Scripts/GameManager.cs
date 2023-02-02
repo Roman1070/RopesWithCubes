@@ -9,9 +9,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private Color32 _colorRed;
-    [SerializeField] private Color32 _colorGreen;
     [SerializeField] private Color32 _colorYellow;
     [SerializeField] private Color32 _colorBlue;
+    [SerializeField] private Color32 _colorPink;
     [SerializeField] private Rope _rope;
     [SerializeField] private Transform _ropeHead;
     [SerializeField] private Collider _planeCollider;
@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
                             _rope.material.color = _colorRed;
                             break;
                         case 4:
-                            _rope.material.color = _colorGreen;
+                            _rope.material.color = _colorPink;
                             break;
                         case 8:
                             _rope.material.color = _colorYellow;
