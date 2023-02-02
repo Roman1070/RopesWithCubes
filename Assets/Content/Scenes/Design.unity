@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1924986, g: 0.22769149, b: 0.29300874, a: 1}
+  m_IndirectSpecularColor: {r: 0.19210458, g: 0.22769776, b: 0.29358107, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -304,6 +304,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae56923cd14dcfc47adf9a8bd5b02f68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _colorRed:
+    serializedVersion: 2
+    rgba: 6182655
+  _colorGreen:
+    serializedVersion: 2
+    rgba: 5701541
+  _colorYellow:
+    serializedVersion: 2
+    rgba: 5701631
+  _colorBlue:
+    serializedVersion: 2
+    rgba: 16758870
   _rope: {fileID: 162236694}
   _ropeHead: {fileID: 1951591011}
   _planeCollider: {fileID: 0}
@@ -681,7 +693,7 @@ MonoBehaviour:
   radius: 0.072
   radialVertices: 7
   isLoop: 0
-  material: {fileID: 2100000, guid: 667c6825583fb417e9779e9417a345dc, type: 2}
+  material: {fileID: 2100000, guid: 189732c736fdb544f98524f96c34aff6, type: 2}
   customMesh: {fileID: 0}
   customMeshRotation: 90
   spawnPoints:
@@ -751,7 +763,7 @@ MonoBehaviour:
     solverIterations: 20
     massPerMeter: 5
     stiffness: 1
-    lengthMultiplier: 0.3
+    lengthMultiplier: 0.207
     energyLoss: 0.01
     gravityMultiplier: 1
     gravity:
@@ -845,6 +857,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 183604808944232911, guid: 60b7e8d31d59d9e46a0632b06ccf5911, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3374602473574814176, guid: 60b7e8d31d59d9e46a0632b06ccf5911, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -2781,6 +2797,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae56923cd14dcfc47adf9a8bd5b02f68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _colorRed:
+    serializedVersion: 2
+    rgba: 6182655
+  _colorGreen:
+    serializedVersion: 2
+    rgba: 5701541
+  _colorYellow:
+    serializedVersion: 2
+    rgba: 5701631
+  _colorBlue:
+    serializedVersion: 2
+    rgba: 16758870
   _rope: {fileID: 162236694}
   _ropeHead: {fileID: 1951591011}
   _planeCollider: {fileID: 0}

@@ -8,6 +8,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private Color32 _colorRed;
+    [SerializeField] private Color32 _colorGreen;
+    [SerializeField] private Color32 _colorYellow;
+    [SerializeField] private Color32 _colorBlue;
     [SerializeField] private Rope _rope;
     [SerializeField] private Transform _ropeHead;
     [SerializeField] private Collider _planeCollider;
@@ -106,6 +110,21 @@ public class GameManager : MonoBehaviour
                 if (hit.collider.TryGetComponent<InteractableCube>(out var cube))
                 {
                     _currentMainCube = cube;
+                    switch (_currentMainCube.Value)
+                    {
+                        case 2:
+                            _rope.material.color = _colorRed;
+                            break;
+                        case 4:
+                            _rope.material.color = _colorGreen;
+                            break;
+                        case 8:
+                            _rope.material.color = _colorYellow;
+                            break;
+                        case 16:
+                            _rope.material.color = _colorBlue;
+                            break;
+                    }
                     cube.PlayBounceAnim();
                     _currentMainCube.RopeAttachmentPoint.transform.localPosition = Vector3.zero;
                     cube.IsMain = true;
@@ -133,7 +152,7 @@ public class GameManager : MonoBehaviour
                 {
                     if (hit.collider.TryGetComponent<InteractableCube>(out var cube) && cube.gameObject != _currentMainCube.gameObject)
                     {
-                        _ropeHeadConnection.transformSettings.transform = cube.transform;
+                        _ropeHeadConnection.transformSettings.transform = cube.ModelsHolder;
                         StartCoroutine(MoveCubeAlongTheRope(cube.transform));
                     }
                     else
@@ -200,12 +219,12 @@ public class GameManager : MonoBehaviour
             dominant.SmokeTrail.transform.parent = null;
             recessive.SmokeTrail.transform.parent = null;
 
-            dominant.transform.DOMove(dominant.transform.position + dominant.transform.up*3 - dominant.transform.forward, _movementForwardAnimDuration).SetEase(_movementForwardAnimCurve);
-            recessive.transform.DOMove(dominant.transform.position + dominant.transform.up*3 + dominant.transform.forward, _movementForwardAnimDuration).SetEase(_movementForwardAnimCurve);
+            dominant.transform.DOMove(dominant.transform.position + dominant.transform.up*3 - dominant.transform.forward* 1.5f, _movementForwardAnimDuration).SetEase(_movementForwardAnimCurve);
+            recessive.transform.DOMove(dominant.transform.position + dominant.transform.up*3 + dominant.transform.forward* 1.5f, _movementForwardAnimDuration).SetEase(_movementForwardAnimCurve);
             DOVirtual.DelayedCall(_movementForwardAnimDuration, ()=>
             {
-                dominant.transform.DOMove(dominant.transform.position + dominant.transform.forward, _movementUpwardAnimDuration).SetEase(_movementUprwardAnimCurve);
-                recessive.transform.DOMove(dominant.transform.position + dominant.transform.forward, _movementUpwardAnimDuration).SetEase(_movementUprwardAnimCurve);
+                dominant.transform.DOMove(dominant.transform.position + dominant.transform.forward* 1.5f, _movementUpwardAnimDuration).SetEase(_movementUprwardAnimCurve);
+                recessive.transform.DOMove(dominant.transform.position + dominant.transform.forward*1.5f, _movementUpwardAnimDuration).SetEase(_movementUprwardAnimCurve);
                 DOVirtual.DelayedCall(_movementUpwardAnimDuration, () =>
                  {
                      var newCube = Instantiate(_cubePrefab, dominant.transform.position, Quaternion.identity);
