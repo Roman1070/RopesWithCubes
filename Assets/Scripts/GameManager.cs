@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private AnimationCurve _movementForwardAnimCurve;
     [SerializeField] private AnimationCurve _movementUprwardAnimCurve;
+    [SerializeField] private AnimationCurve _movementAnimCurve;
     [SerializeField] private float _movementForwardAnimDuration;
     [SerializeField] private float _movementUpwardAnimDuration;
     [SerializeField] private float _delayBeforeFalling;
@@ -195,12 +196,14 @@ public class GameManager : MonoBehaviour
         {
             //mainAnchor.DOMoveY(-4, 1.2f* length/13);
         });
-        for (int i =0; i <= _rope.measurements.particleCount - 1; i++)
+        /*for (int i =0; i <= _rope.measurements.particleCount - 1; i++)
         {
             cube.DOMove(positions[i], delay);
             yield return new WaitForSeconds(delay);
-        }
+        }*/
+        cube.DOPath(positions.ToArray(), length/10f).SetEase(_movementAnimCurve);
         IsMovingCubes = false;
+        yield return new WaitForSeconds(delay);
     }
 
 
@@ -216,7 +219,7 @@ public class GameManager : MonoBehaviour
 
             dominant.SmokeTrail.Stop();
             recessive.SmokeTrail.Stop();
-            dominant.SmokeTrail.transform.parent = null;
+            /*dominant.SmokeTrail.transform.parent = null;
             recessive.SmokeTrail.transform.parent = null;
 
             dominant.transform.DOMove(dominant.transform.position + dominant.transform.up*3 - dominant.transform.forward* 1.5f, _movementForwardAnimDuration).SetEase(_movementForwardAnimCurve);
@@ -227,7 +230,7 @@ public class GameManager : MonoBehaviour
                 recessive.transform.DOMove(dominant.transform.position + dominant.transform.forward*1.5f, _movementUpwardAnimDuration).SetEase(_movementUprwardAnimCurve);
                 DOVirtual.DelayedCall(_movementUpwardAnimDuration, () =>
                  {
-                     /*var newCube = Instantiate(_cubePrefab, dominant.transform.position, Quaternion.identity);
+                     var newCube = Instantiate(_cubePrefab, dominant.transform.position, Quaternion.identity);
                      newCube.OnSpawned(recessive.Value * 2);
                      newCube.SmokeTrail.Stop();
                      newCube.Rigidbody.isKinematic = true;
@@ -236,13 +239,13 @@ public class GameManager : MonoBehaviour
                      DOVirtual.DelayedCall(_delayBeforeFalling, () =>
                      {
                          newCube.Rigidbody.isKinematic = false;
-                     });*/
-                     dominant.Destroy();
-                     recessive.Destroy();
+                     });
                  });
                 
-            });
-           
+            });*/
+            dominant.Destroy();
+            recessive.Destroy();
+
         }
         
         DOVirtual.DelayedCall(0.1f,()=>
@@ -251,12 +254,15 @@ public class GameManager : MonoBehaviour
             StopAllCoroutines();
         });
 
-        _currentMainCube.IsMain = false;
-        _currentMainCube = null;
-        IsMovingCubes = false;
+        if (_currentMainCube != null)
+        {
+            _currentMainCube.IsMain = false;
+            _currentMainCube = null;
+            IsMovingCubes = false;
 
-        _rope.gameObject.SetActive(false);
-        _rope.collisions.enabled = true;
-        _timeSinceLastInteraction = 0;
+            _rope.gameObject.SetActive(false);
+            _rope.collisions.enabled = true;
+            _timeSinceLastInteraction = 0;
+        }
     }
 }

@@ -11,7 +11,6 @@ public class InteractableCube : MonoBehaviour
     public Collider Collider;
     public Transform ModelsHolder;
     public Transform RopeAttachmentPoint;
-    public MeshRenderer MeshRenderer;
     public Rigidbody Rigidbody;
     public ParticleSystem SmokeTrail;
     public ParticleSystem AppearenceEffect;
@@ -24,6 +23,8 @@ public class InteractableCube : MonoBehaviour
     [SerializeField] private Collider[] _fracturedPartsColliders;
     [SerializeField] private AnimationCurve _parabola;
     [SerializeField] private Material[] _colors;
+    [SerializeField] private GameObject _unbrokenModel;
+    [SerializeField] private GameObject _fracturedModel;
 
     private void Awake()
     {
@@ -48,12 +49,21 @@ public class InteractableCube : MonoBehaviour
 
     public void Destroy()
     {
-        foreach(var part in _fracturedPartsRbs)
+        _unbrokenModel.SetActive(false);
+        _fracturedModel.SetActive(true);
+        foreach (var part in _fracturedPartsRbs)
         {
-            _fracturedPartsColliders.ForEach(c => c.enabled = true);
+            //_fracturedPartsColliders.ForEach(c => c.enabled = true);
             part.isKinematic = false;
-            part.AddExplosionForce(30, transform.position, 10,1,ForceMode.Impulse);
+            part.useGravity = false;
+            part.AddExplosionForce(4, transform.position, 2,1,ForceMode.Impulse);
+            DOVirtual.Float(0, 1, 2, t =>
+            {
+                part.AddForce(new Vector3(0, 0, -5f), ForceMode.Force);
+            }).SetUpdate(UpdateType.Fixed);
         }
+        GetComponent<Collider>().enabled = false;
+        Destroy(this);
     }
 
     public void PlayBounceAnim()
