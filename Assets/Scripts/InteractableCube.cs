@@ -13,7 +13,7 @@ public class InteractableCube : MonoBehaviour
     public Transform RopeAttachmentPoint;
     public Rigidbody Rigidbody;
     public ParticleSystem SmokeTrail;
-    public ParticleSystem AppearenceEffect;
+    public ParticleSystem OnDestroyVFX;
 
     public bool IsMain;
     public float Value;
@@ -40,7 +40,7 @@ public class InteractableCube : MonoBehaviour
         }
         transform.localScale = Vector3.one * _startLocalScale;
         GetComponent<Animator>().SetTrigger("Appearence");
-        AppearenceEffect.Play();
+        //AppearenceEffect.Play();
         DOVirtual.DelayedCall(1, () =>
         {
             SmokeTrail.Play();
@@ -51,15 +51,16 @@ public class InteractableCube : MonoBehaviour
     {
         _unbrokenModel.SetActive(false);
         _fracturedModel.SetActive(true);
+        OnDestroyVFX.Play();
         foreach (var part in _fracturedPartsRbs)
         {
             //_fracturedPartsColliders.ForEach(c => c.enabled = true);
             part.isKinematic = false;
             part.useGravity = false;
-            part.AddExplosionForce(4, transform.position, 2,1,ForceMode.Impulse);
-            DOVirtual.Float(0, 1, 2, t =>
+            part.AddExplosionForce(8, transform.position-Vector3.forward, 3,1,ForceMode.Impulse);
+            DOVirtual.Float(0, 1, 3, t =>
             {
-                part.AddForce(new Vector3(0, 0, -5f), ForceMode.Force);
+                part.AddForce(new Vector3(0, 0, -16f), ForceMode.Force);
             }).SetUpdate(UpdateType.Fixed);
         }
         GetComponent<Collider>().enabled = false;
@@ -80,9 +81,9 @@ public class InteractableCube : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.TryGetComponent<InteractableCube>(out var cube))
+        if (collision.collider.TryGetComponent<InteractableCube>(out var cube) && IsMain)
         {
-            FindObjectOfType<GameManager>().OnCubesIntersected(IsMain ? this : cube, IsMain ? cube : this);
+            FindObjectOfType<GameManager>().OnCubesIntersected(this, cube);
         }
     }
 

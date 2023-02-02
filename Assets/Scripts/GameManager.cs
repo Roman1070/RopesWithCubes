@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour
                     _rope.gameObject.SetActive(true);
                     float radius = _rope.radius;
                     _rope.radius = 0;
-                    DOVirtual.DelayedCall(0.12f, () =>
+                    DOVirtual.DelayedCall(0.1f, () =>
                     {
                         _rope.ResetToSpawnCurve();
                         _rope.radius = radius;
@@ -201,7 +201,7 @@ public class GameManager : MonoBehaviour
             cube.DOMove(positions[i], delay);
             yield return new WaitForSeconds(delay);
         }*/
-        cube.DOPath(positions.ToArray(), length/10f).SetEase(_movementAnimCurve);
+        cube.DOPath(positions.ToArray(), length/8f).SetEase(_movementAnimCurve);
         IsMovingCubes = false;
         yield return new WaitForSeconds(delay);
     }
@@ -244,7 +244,7 @@ public class GameManager : MonoBehaviour
                 
             });*/
             dominant.Destroy();
-            recessive.Destroy();
+            Destroy(recessive.gameObject);
 
         }
         
