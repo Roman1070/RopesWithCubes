@@ -117,10 +117,10 @@ public class GameManager : MonoBehaviour
                             _rope.material.color = _colorRed;
                             break;
                         case 4:
-                            _rope.material.color = _colorYellow;
+                            _rope.material.color = _colorBlue;
                             break;
                         case 8:
-                            _rope.material.color = _colorBlue;
+                            _rope.material.color = _colorYellow;
                             break;
                         case 16:
                             _rope.material.color = _colorPink;
