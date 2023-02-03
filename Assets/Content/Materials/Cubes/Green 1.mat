@@ -144,7 +144,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SpecularMapType: 0
-    - _SpecularRoughness: 0.473
+    - _SpecularRoughness: 0.55
     - _SpecularToonSize: 0.25
     - _SpecularToonSmoothness: 0.05
     - _SpecularType: 0
@@ -175,5 +175,5 @@ Material:
     - _ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimColor: {r: 0.6784314, g: 0.6784314, b: 0.6784314, a: 0.5}
     - _SColor: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
-    - _SpecularColor: {r: 3.9999995, g: 3.9999995, b: 3.9999995, a: 1}
+    - _SpecularColor: {r: 0.49999994, g: 0.49999994, b: 0.49999994, a: 1}
   m_BuildTextureStacks: []
