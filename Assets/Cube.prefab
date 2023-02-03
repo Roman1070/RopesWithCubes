@@ -231,9 +231,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   _colors:
   - {fileID: 2100000, guid: 63f4a083d3668f24eb230f735c502fbc, type: 2}
-  - {fileID: 2100000, guid: 168edb9a41856014d8ca1d0831a85a8d, type: 2}
   - {fileID: 2100000, guid: 01cd6d3eeff72e14ba4b1c62259507c9, type: 2}
-  - {fileID: 2100000, guid: 5826c16e853dbec42af44348e27029e9, type: 2}
+  - {fileID: 2100000, guid: 41fa735632ce9144184b1ea8ae71a31e, type: 2}
   - {fileID: 2100000, guid: a90b0f22a4623c349a4f14d672477286, type: 2}
   _unbrokenModel: {fileID: 5506354232545369616}
   _fracturedModel: {fileID: 7900987986924885868}
