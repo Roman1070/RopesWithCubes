@@ -47,11 +47,11 @@ public class InteractableCube : MonoBehaviour
         });
     }
 
-    public void Destroy()
+    public void Destroy(bool playStarsVfx)
     {
         _unbrokenModel.SetActive(false);
         _fracturedModel.SetActive(true);
-        OnDestroyVFX.Play();
+        if(playStarsVfx) OnDestroyVFX.Play();
         foreach (var part in _fracturedPartsRbs)
         {
             //_fracturedPartsColliders.ForEach(c => c.enabled = true);
@@ -64,7 +64,7 @@ public class InteractableCube : MonoBehaviour
             }).SetUpdate(UpdateType.Fixed);
         }
         GetComponent<Collider>().enabled = false;
-        Destroy(this);
+        GameObject.Destroy(this);
     }
 
     public void PlayBounceAnim()
